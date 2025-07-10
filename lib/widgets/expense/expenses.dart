@@ -1,5 +1,6 @@
 import "package:expense_tracker/widgets/expense/expenses_list.dart";
 import "package:expense_tracker/models/expense.dart";
+import "package:expense_tracker/widgets/expense/new_expense.dart";
 import "package:flutter/material.dart";
 
 class Expenses extends StatefulWidget {
@@ -42,11 +43,26 @@ class _ExpensesState extends State<Expenses> {
       category: Category.travel,
     ),
   ];
+
+  // for opening modal on clicking plus icon
+  // IN General context is a full of meta data.
+  void _openAddExpenseOverlay() {
+    showModalBottomSheet(
+      context:
+          context, // this context hold information about the Expenses Widget and its position in widget tree.
+      builder: (ctx) =>
+          NewExpense(), // this ctx(context) hold info about showModalBottomSheet and its position in widget tree.
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+        title: const Text('Flutter Expense Tracker'),
+        actions: [
+          IconButton(onPressed: _openAddExpenseOverlay, icon: Icon(Icons.add)),
+        ],
       ),
       body: Column(
         children: [

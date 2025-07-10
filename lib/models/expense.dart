@@ -9,13 +9,13 @@ final formater = DateFormat.yMd();
 const uuid = Uuid();
 
 // category enum value
-enum Category { food, travel, entertainment, work }
+enum Category { food, travel, leisure, work }
 
 // category icons map
 const categoryIcons = {
   Category.food: Icons.lunch_dining,
   Category.travel: Icons.flight_takeoff,
-  Category.entertainment: Icons.movie,
+  Category.leisure: Icons.movie,
   Category.work: Icons.work,
 };
 

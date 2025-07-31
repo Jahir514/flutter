@@ -24,7 +24,7 @@ class _NewExpense extends State<NewExpense> {
     super.dispose();
   }
 
-  // here showDatePicker function a future data type which is handled by async awiat.
+  // here showDatePicker function a future data type which is handled by async awiat
   void _openDateCalendar() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);

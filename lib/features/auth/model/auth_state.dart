@@ -13,7 +13,7 @@ class AuthState {
   }) {
     return AuthState(
       isLoading: isLoading ?? this.isLoading,
-      error: error,
+      error: error ?? this.error,
       user: user ?? this.user,
       token: token ?? this.token,
     );

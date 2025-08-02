@@ -1,50 +1,125 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/auth_provider.dart';
+import 'package:personal_budget/core/themes/color_palette.dart';
+import 'package:personal_budget/features/auth/providers/auth_provider.dart';
 
-class LoginScreen extends ConsumerWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  var _obscurePassword = true;
+
+  //dispose method
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  //submit form
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      final authController = ref.watch(authControllerProvider.notifier);
+      authController.emailLogin(
+        email,
+        password,
+        context,
+        onSuccess: () {
+          Navigator.of(context).pushReplacementNamed('/dashboard');
+        },
+      );
+    }
+  }
+
+  //build method
+  @override
+  Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
-    final authController = ref.read(authControllerProvider.notifier);
-
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(title: Text('Login')),
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const Text("Welcome Back", style: TextStyle(fontSize: 24)),
-            const SizedBox(height: 16),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "Password"),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: authState.isLoading
-                  ? null
-                  : () {
-                      final email = emailController.text.trim();
-                      final pass = passwordController.text.trim();
-                      //authController.emailLogin(email, pass, context);
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Text('Welcome Again.', style: TextStyle(fontSize: 24)),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: const TextStyle(color: AppColors.textSecondary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primary),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Email is required';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: const TextStyle(color: AppColors.textSecondary),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.primary),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
                     },
-              child: authState.isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text("Login"),
-            ),
-          ],
+                    icon: _obscurePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Password is required';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              if (authState.error != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Text(
+                    authState.error!,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: authState.isLoading ? null : _submit,
+                child: Text('Login'),
+              ),
+            ],
+          ),
         ),
       ),
     );

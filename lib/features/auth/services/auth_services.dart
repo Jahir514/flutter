@@ -18,7 +18,6 @@ class AuthServices {
     );
 
     final data = jsonDecode(response.body);
-    print(data);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return data['token'];
     } else {
@@ -37,7 +36,6 @@ class AuthServices {
       body: jsonEncode({'email': email, 'password': password}),
     );
     final data = jsonDecode(response.body);
-
     //send response based on status code
     if (response.statusCode == 200 || response.statusCode == 201) {
       return data['token'];

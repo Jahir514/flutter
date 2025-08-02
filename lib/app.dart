@@ -3,6 +3,7 @@ import 'package:personal_budget/core/themes/app_theme.dart';
 import 'package:personal_budget/features/auth/screens/login_screen.dart';
 import 'package:personal_budget/features/auth/screens/register_screen.dart';
 import 'package:personal_budget/features/dashboard/screens/dashboard_screen.dart';
+import 'package:personal_budget/features/income/screens/income_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,11 +14,12 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: '/dashboard',
+      initialRoute: '/income',
       routes: {
         '/dashboard': (_) => const DashboardScreen(),
         '/login': (_) => const LoginScreen(),
         '/register': (_) => const RegisterScreen(),
+        '/income': (_) => const IncomeScreen(),
       },
     );
   }

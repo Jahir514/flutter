@@ -42,4 +42,44 @@ class AuthController extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false);
     }
   }
+
+  //email Login method
+  Future<void> emailLogin(
+    String email,
+    String password,
+    BuildContext context, {
+    void Function()? onSuccess,
+  }) async {
+    //set authsate for loading and error
+    state = state.copyWith(isLoading: true, error: null);
+    //send data using service emailLogin method
+    try {
+      final token = await _authServices.emailLogin(
+        email: email,
+        password: password,
+      );
+      //set token data in state
+      state = state.copyWith(token: token);
+      //set success message
+      if (context.mounted && onSuccess != null) {
+        SnackBarUtil.showSuccess(context, 'Login success');
+        onSuccess();
+      }
+    } catch (e) {
+      //set error state data
+      state = state.copyWith(
+        error: e.toString().replaceFirst('Exception: ', ''),
+      );
+      //set error message
+      if (context.mounted) {
+        SnackBarUtil.showError(
+          context,
+          e.toString().replaceFirst('Exception: ', ''),
+        );
+      }
+    } finally {
+      //set loaidng state after finsihing task
+      state = state.copyWith(isLoading: false);
+    }
+  }
 }

@@ -49,17 +49,17 @@ class IncomeList extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // SL Badge
-                        CircleAvatar(
-                          radius: 16,
-                          backgroundColor: Colors.green.shade400,
-                          child: Text(
-                            '${index + 1}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
+                        // CircleAvatar(
+                        //   radius: 16,
+                        //   backgroundColor: Colors.green.shade400,
+                        //   child: Text(
+                        //     '${index + 1}',
+                        //     style: const TextStyle(
+                        //       color: Colors.white,
+                        //       fontSize: 12,
+                        //     ),
+                        //   ),
+                        // ),
                         const SizedBox(width: 10),
 
                         // Title

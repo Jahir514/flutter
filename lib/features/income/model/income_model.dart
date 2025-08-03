@@ -16,7 +16,7 @@ class IncomeModel {
     return IncomeModel(
       id: json['_id'],
       title: json['title'],
-      amount: json['amount'],
+      amount: (json['amount'] as num).toDouble(),
       date: DateTime.parse(json['date']),
       category: json['category'] != null ? json['category']['title'] : null,
     );
@@ -27,4 +27,9 @@ class IncomeModel {
     'category': category,
     'date': date.toIso8601String(),
   };
+
+  @override
+  String toString() {
+    return 'IncomeModel(id: $id, title: $title, amount: $amount, date: $date, category: $category)';
+  }
 }

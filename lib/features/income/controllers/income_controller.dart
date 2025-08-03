@@ -21,7 +21,7 @@ class IncomeController extends StateNotifier<IncomeState> {
       final newIncome = await _incomeServices.createIncome(income);
       final updatedIncome =
           // ignore: unnecessary_cast
-          [...(state.income ?? []), newIncome] as List<IncomeModel>;
+          [...(state.income ?? []), newIncome].cast<IncomeModel>();
       state = state.copyWith(income: updatedIncome);
     } catch (e) {
       //set error state

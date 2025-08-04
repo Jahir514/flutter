@@ -16,7 +16,6 @@ class IncomeServices {
     );
     if (response.statusCode == 201 || response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data['income']);
       final result = IncomeModel.fromJson(data['income']);
       return result;
     } else {

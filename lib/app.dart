@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: '/income',
+      initialRoute: '/dashboard',
       routes: {
         '/dashboard': (_) => const DashboardScreen(),
         '/login': (_) => const LoginScreen(),

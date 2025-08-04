@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:personal_budget/core/utils/snackbar_util.dart';
 import 'package:personal_budget/features/category/providers/category_providers.dart';
 import 'package:personal_budget/features/income/model/income_model.dart';
 import 'package:personal_budget/features/income/providers/income_provider.dart';
@@ -81,20 +82,30 @@ class _AddIncomeDialogState extends ConsumerState<AddIncomeDialog> {
     try {
       await ref.read(incomeControllerProvider.notifier).createIncome(newIncome);
       if (mounted) {
+        SnackBarUtil.showSuccess(
+          //snackbar work those widget which are direct child of Scaffold.
+          //here the context must be thie context of that Scaffold.
+          Navigator.of(
+            context,
+            rootNavigator: true,
+          ).context, //this line provide that context
+          'Successfully create income',
+        );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
+        SnackBarUtil.showError(
+          Navigator.of(context, rootNavigator: true).context,
+          e.toString().replaceFirst("Exception: ", ""),
+        );
       }
     }
   }
 
   void _showError(String message) {
     ScaffoldMessenger.of(
-      context,
+      Navigator.of(context, rootNavigator: true).context,
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 

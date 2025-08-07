@@ -1,31 +1,29 @@
-// import 'package:flutter/foundation.dart';
-// import 'package:personal_budget/features/income/model/income_model.dart';
-// import 'package:personal_budget/features/expense/model/expense_model.dart';
+import 'package:personal_budget/features/dashboard/model/dashboard_model.dart';
 
-// class DashboardState {
-//   final bool isLoading;
-//   final String? error;
-//   final List<IncomeModel>? incomes;
-//   final List<ExpenseModel>? expenses;
+class DashboardState {
+  final bool isLoading;
+  final String? error;
+  final DashboardModel? data;
 
-//   DashboardState({
-//     this.isLoading = false,
-//     this.error,
-//     this.incomes,
-//     this.expenses,
-//   });
+  DashboardState({
+    required this.isLoading,
+    required this.error,
+    required this.data,
+  });
 
-//   DashboardState copyWith({
-//     bool? isLoading,
-//     String? error,
-//     List<IncomeModel>? incomes,
-//     List<ExpenseModel>? expenses,
-//   }) {
-//     return DashboardState(
-//       isLoading: isLoading ?? this.isLoading,
-//       error: error,
-//       incomes: incomes ?? this.incomes,
-//       expenses: expenses ?? this.expenses,
-//     );
-//   }
-// }
+  factory DashboardState.initial() {
+    return DashboardState(isLoading: false, error: null, data: null);
+  }
+
+  DashboardState copyWith({
+    bool? isLoading,
+    String? error,
+    DashboardModel? data,
+  }) {
+    return DashboardState(
+      isLoading: isLoading ?? this.isLoading,
+      error: error ?? this.error,
+      data: data ?? this.data,
+    );
+  }
+}

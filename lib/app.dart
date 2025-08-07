@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_budget/core/themes/app_theme.dart';
 import 'package:personal_budget/features/auth/screens/login_screen.dart';
 import 'package:personal_budget/features/auth/screens/register_screen.dart';
+import 'package:personal_budget/features/common/screens/bottom_nav_screen.dart';
 import 'package:personal_budget/features/dashboard/screens/dashboard_screen.dart';
 import 'package:personal_budget/features/income/screens/income_screen.dart';
 
@@ -14,9 +15,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: '/dashboard',
+      initialRoute: '/',
       routes: {
-        '/dashboard': (_) => const DashboardScreen(),
+        '/': (_) => const BottomNavScreen(),
         '/login': (_) => const LoginScreen(),
         '/register': (_) => const RegisterScreen(),
         '/income': (_) => const IncomeScreen(),
